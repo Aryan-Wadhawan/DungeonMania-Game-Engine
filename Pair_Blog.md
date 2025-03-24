@@ -14,7 +14,7 @@
 
 [Answer]
 
-> A player steps onto a tile containing a piece of `wood`. List the methods that will be run in order, from before the player begins movement, up to and including the point the wood is destroyed from the map. Very briefly summarise what each method does. (1 mark)
+> The Game class includes a method with the signature public Game tick(Direction movementDirection). Provide a detailed explanation of what this method does, including an overview of all the other methods it calls. Additionally, explain the purpose of the callback system it interacts with, and clarify the intentions behind the tickActions, futureTickActions, and currentAction fields. (1 mark)
 
 [Answer]
 
