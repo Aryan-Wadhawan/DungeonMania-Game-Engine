@@ -13,6 +13,11 @@ import dungeonmania.entities.collectables.Treasure;
 import dungeonmania.entities.collectables.potions.InvincibilityPotion;
 import dungeonmania.entities.collectables.potions.InvisibilityPotion;
 import dungeonmania.entities.collectables.potions.Potion;
+import dungeonmania.entities.enemies.strategies.AlliedStrategy;
+import dungeonmania.entities.enemies.strategies.HostileStrategy;
+import dungeonmania.entities.enemies.strategies.InvincibleStrategy;
+import dungeonmania.entities.enemies.strategies.InvisibleStrategy;
+import dungeonmania.entities.enemies.strategies.Strategy;
 import dungeonmania.map.GameMap;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
@@ -30,6 +35,7 @@ public class Mercenary extends Enemy implements Interactable, PotionListener {
     private double allyDefence;
     private boolean allied = false;
     private boolean wasAdjacentToPlayer = false;
+    private Strategy strategy;
 
     private String movementType = "hostile";
 
@@ -70,6 +76,14 @@ public class Mercenary extends Enemy implements Interactable, PotionListener {
 
     }
 
+    public boolean isWasAdjacentToPlayer() {
+        return wasAdjacentToPlayer;
+    }
+
+    public void setWasAdjacentToPlayer(boolean wasAdjacentToPlayer) {
+        this.wasAdjacentToPlayer = wasAdjacentToPlayer;
+    }
+
     @Override
     public void interact(Player player, Game game) {
         allied = true;
@@ -84,64 +98,22 @@ public class Mercenary extends Enemy implements Interactable, PotionListener {
         Player player = game.getPlayer();
         switch (movementType) {
         case "allied":
-            boolean isAdjacentToPlayer = Position.isAdjacent(player.getPosition(), getPosition());
-            if (wasAdjacentToPlayer && !isAdjacentToPlayer) {
-                nextPos = player.getPreviousDistinctPosition();
-            } else {
-                // If currently still adjacent, wait in place. Else pursue the player.
-                nextPos = isAdjacentToPlayer ? getPosition()
-                        : map.dijkstraPathFind(getPosition(), player.getPosition(), this);
-                wasAdjacentToPlayer = Position.isAdjacent(player.getPosition(), nextPos);
-            }
+            strategy = new AlliedStrategy();
+            nextPos = strategy.moveToNewPosit(map, this, player);
             break;
         case "invisible":
             // Move random
-            Random randGen = new Random();
-            List<Position> pos = getPosition().getCardinallyAdjacentPositions();
-            pos = pos.stream().filter(p -> map.canMoveTo(this, p)).toList();
-            if (pos.size() == 0) {
-                nextPos = getPosition();
-                map.moveTo(this, nextPos);
-            } else {
-                nextPos = pos.get(randGen.nextInt(pos.size()));
-                map.moveTo(this, nextPos);
-            }
+            strategy = new InvisibleStrategy();
+            nextPos = strategy.moveToNewPosit(map, this);
+            map.moveTo(this, nextPos);
             break;
         case "invincible":
-            // Check whether the mercenary should flee left or right & up or down
-            Position plrDiff = Position.calculatePositionBetween(map.getPlayer().getPosition(), getPosition());
-            Position moveX = (plrDiff.getX() >= 0) ? Position.translateBy(getPosition(), Direction.RIGHT)
-                    : Position.translateBy(getPosition(), Direction.LEFT);
-            Position moveY = (plrDiff.getY() >= 0) ? Position.translateBy(getPosition(), Direction.DOWN)
-                    : Position.translateBy(getPosition(), Direction.UP);
-            Position offset = getPosition();
-            // If on the same Y axis and can flee left or right, do so.
-            if (plrDiff.getY() == 0 && map.canMoveTo(this, moveX))
-                offset = moveX;
-            // Or if on the same X axis and can flee up or down, do so.
-            else if (plrDiff.getX() == 0 && map.canMoveTo(this, moveY))
-                offset = moveY;
-            // Prioritise Y movement if further away on the X axis
-            else if (Math.abs(plrDiff.getX()) >= Math.abs(plrDiff.getY())) {
-                if (map.canMoveTo(this, moveY))
-                    offset = moveY;
-                else if (map.canMoveTo(this, moveX))
-                    offset = moveX;
-                else
-                    offset = getPosition();
-                // Prioritise X movement if further away on the Y axis
-            } else {
-                if (map.canMoveTo(this, moveX))
-                    offset = moveX;
-                else if (map.canMoveTo(this, moveY))
-                    offset = moveY;
-                else
-                    offset = getPosition();
-            }
-            nextPos = offset;
+            strategy = new InvincibleStrategy();
+            nextPos = strategy.moveToNewPosit(map, this);
             break;
         case "hostile":
-            nextPos = map.dijkstraPathFind(getPosition(), player.getPosition(), this);
+            strategy = new HostileStrategy();
+            nextPos = strategy.moveToNewPosit(map, this, player);
             break;
         default:
             break;

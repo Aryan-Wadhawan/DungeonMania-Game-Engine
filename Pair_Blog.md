@@ -30,11 +30,11 @@
 
 > i. Look inside src/main/java/dungeonmania/entities/enemies. Where can you notice an instance of repeated code? Note down the particular offending lines/methods/fields.
 
-[Answer]
+I noticed that the move methods in the Mercenary and ZombieToast classes contain repeated code. Specifically, the code for the invincible case in Mercenary and the runAway case in ZombieToast are the same. Also, the code for the invisible case in Mercenary and the random case in ZombieToast are the same.
 
 > ii. What Design Pattern could be used to improve the quality of the code and avoid repetition? Justify your choice by relating the scenario to the key characteristics of your chosen Design Pattern.
 
-[Answer]
+We can use the Strategy Pattern to improve the quality of the code and avoid repetition. The Strategy Pattern provides an interface with various implementations of the same methods, allowing for different behaviors based on the class in use. In this case, we could create an interface with implementations that vary depending on whether the enemy's movementType is invisible, invincible or allied.
 
 > iii. Using your chosen Design Pattern, refactor the code to remove the repetition.
 
