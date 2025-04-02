@@ -6,7 +6,7 @@ import dungeonmania.util.Position;
 import dungeonmania.entities.Player;
 
 public interface Strategy {
-    public Position moveToNewPosit(GameMap map, Enemy enemy);
+    public Position newPosit(GameMap map, Enemy enemy);
 
-    public Position moveToNewPosit(GameMap map, Enemy enemy, Player player);
+    public Position newPosit(GameMap map, Enemy enemy, Player player);
 }

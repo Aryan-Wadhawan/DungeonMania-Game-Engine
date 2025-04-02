@@ -7,7 +7,7 @@ import dungeonmania.map.GameMap;
 import dungeonmania.util.Position;
 
 public class AlliedStrategy implements Strategy {
-    public Position moveToNewPosit(GameMap map, Enemy enemy, Player player) {
+    public Position newPosit(GameMap map, Enemy enemy, Player player) {
         Position nextPos = null;
         boolean isAdjacentToPlayer = Position.isAdjacent(player.getPosition(), enemy.getPosition());
         if (enemy instanceof Mercenary) {
@@ -24,7 +24,7 @@ public class AlliedStrategy implements Strategy {
         return nextPos;
     }
 
-    public Position moveToNewPosit(GameMap map, Enemy enemy) {
+    public Position newPosit(GameMap map, Enemy enemy) {
         return null;
     }
 }

@@ -99,21 +99,21 @@ public class Mercenary extends Enemy implements Interactable, PotionListener {
         switch (movementType) {
         case "allied":
             strategy = new AlliedStrategy();
-            nextPos = strategy.moveToNewPosit(map, this, player);
+            nextPos = strategy.newPosit(map, this, player);
             break;
         case "invisible":
             // Move random
             strategy = new InvisibleStrategy();
-            nextPos = strategy.moveToNewPosit(map, this);
+            nextPos = strategy.newPosit(map, this);
             map.moveTo(this, nextPos);
             break;
         case "invincible":
             strategy = new InvincibleStrategy();
-            nextPos = strategy.moveToNewPosit(map, this);
+            nextPos = strategy.newPosit(map, this);
             break;
         case "hostile":
             strategy = new HostileStrategy();
-            nextPos = strategy.moveToNewPosit(map, this, player);
+            nextPos = strategy.newPosit(map, this, player);
             break;
         default:
             break;

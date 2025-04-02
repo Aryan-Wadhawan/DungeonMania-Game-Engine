@@ -10,7 +10,7 @@ import dungeonmania.map.GameMap;
 import dungeonmania.util.Position;
 
 public class InvisibleStrategy implements Strategy {
-    public Position moveToNewPosit(GameMap map, Enemy enemy) {
+    public Position newPosit(GameMap map, Enemy enemy) {
         List<Position> pos = enemy.getPosition().getCardinallyAdjacentPositions();
         Position nextPos;
         Random randGen = new Random();
@@ -23,7 +23,7 @@ public class InvisibleStrategy implements Strategy {
         return nextPos;
     }
 
-    public Position moveToNewPosit(GameMap map, Enemy enemy, Player player) {
+    public Position newPosit(GameMap map, Enemy enemy, Player player) {
         return null;
     }
 }

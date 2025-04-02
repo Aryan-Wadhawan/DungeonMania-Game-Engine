@@ -38,7 +38,7 @@ We can use the Strategy Pattern to improve the quality of the code and avoid rep
 
 > iii. Using your chosen Design Pattern, refactor the code to remove the repetition.
 
-[Briefly explain what you did]
+I refactored the code by implementing the Strategy Pattern to eliminate repetition in the movement logic of the Mercenary and ZombieToast classes. I created a Strategy interface along with specific implementations for each movement behavior: InvisibleStrategy, InvincibleStrategy, AlliedStrategy, and HostileStrategy. I integrated this interface into the enemy classes, allowing them to assign and switch strategies based on the player's status. This approach removed repeated code, enhanced maintainability, and improved the flexibility of enemy behaviors in the game.
 
 ### b) Pattern Analysis
 

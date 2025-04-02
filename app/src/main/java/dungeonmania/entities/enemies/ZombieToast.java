@@ -33,12 +33,12 @@ public class ZombieToast extends Enemy implements PotionListener {
         switch (movementType) {
         case "random":
             strategy = new InvisibleStrategy();
-            nextPos = strategy.moveToNewPosit(map, this);
+            nextPos = strategy.newPosit(map, this);
             map.moveTo(this, nextPos);
             break;
         case "runAway":
             strategy = new InvincibleStrategy();
-            nextPos = strategy.moveToNewPosit(map, this);
+            nextPos = strategy.newPosit(map, this);
             break;
         default:
             break;

@@ -6,11 +6,11 @@ import dungeonmania.map.GameMap;
 import dungeonmania.util.Position;
 
 public class HostileStrategy implements Strategy {
-    public Position moveToNewPosit(GameMap map, Enemy enemy) {
+    public Position newPosit(GameMap map, Enemy enemy) {
         return null;
     }
 
-    public Position moveToNewPosit(GameMap map, Enemy enemy, Player player) {
+    public Position newPosit(GameMap map, Enemy enemy, Player player) {
         return map.dijkstraPathFind(enemy.getPosition(), player.getPosition(), enemy);
     }
 }

@@ -7,7 +7,7 @@ import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 public class InvincibleStrategy implements Strategy {
-    public Position moveToNewPosit(GameMap map, Enemy enemy) {
+    public Position newPosit(GameMap map, Enemy enemy) {
         Position plrDiff = Position.calculatePositionBetween(map.getPlayer().getPosition(), enemy.getPosition());
         Position moveX = (plrDiff.getX() >= 0) ? Position.translateBy(enemy.getPosition(), Direction.RIGHT)
                 : Position.translateBy(enemy.getPosition(), Direction.LEFT);
@@ -40,7 +40,7 @@ public class InvincibleStrategy implements Strategy {
         return offset;
     }
 
-    public Position moveToNewPosit(GameMap map, Enemy enemy, Player player) {
+    public Position newPosit(GameMap map, Enemy enemy, Player player) {
         return null;
     }
 }
