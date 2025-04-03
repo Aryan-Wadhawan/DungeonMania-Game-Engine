@@ -6,11 +6,11 @@
 
 [Answer]
 
-> In the game, player and enemy actions to be performed later are stored as "comparable callbacks". Callbacks are pieces of code that can be run at a later time. However, for what purpose are these callbacks made *comparable*? (1 mark)
+> In the game, player and enemy actions to be performed later are stored as "comparable callbacks". Callbacks are pieces of code that can be run at a later time. However, for what purpose are these callbacks made _comparable_? (1 mark)
 
 [Answer]
 
-> Why is it so important that the dungeon files used for testing follow the technical specification? (4.1.1 in the MVP spec) (1 mark) 
+> Why is it so important that the dungeon files used for testing follow the technical specification? (4.1.1 in the MVP spec) (1 mark)
 
 [Answer]
 
@@ -86,9 +86,13 @@
 
 [Answer]
 
+No, I strongly believe the design does not comply with the Open-Closed Principle. The original `Goal` class handled all logic using string types and a large `switch` statement inside the `achieved()` and `toString()` methods. This means that any time a new goal type is added, the class would have to be modified. This violates the principle that classes should be open for extension but closed for modification.
+
 > ii. If you think the design is sufficient as it is, justify your decision. If you think the answer is no, pick a suitable Design Pattern that would improve the quality of the code and refactor the code accordingly.
 
 [Briefly explain what you did]
+
+I refactored the goal system using the **Composite design pattern**. I created a `GoalComponent` interface that all goal types implement. Each individual goal type (like `ExitGoal`, `TreasureGoal`, and `BouldersGoal`) implements its own `achieved()` and `toString()` logic. I also created composite goals `AndGoal` and `OrGoal` which allow nesting of subgoals. This allows the system to be extended easily in the future or later tasks without modifying existing code.
 
 ### f) Open Refactoring
 
