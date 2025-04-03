@@ -4,11 +4,11 @@ import dungeonmania.Game;
 import dungeonmania.battles.BattleStatistics;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.Player;
-import dungeonmania.entities.inventory.InventoryItem;
+import dungeonmania.entities.inventory.BattleItem;
 import dungeonmania.map.GameMap;
 import dungeonmania.util.Position;
 
-public class Sword extends InventoryItem implements Useable {
+public class Sword extends BattleItem implements Useable {
     public static final double DEFAULT_ATTACK = 1;
     public static final double DEFAULT_ATTACK_SCALE_FACTOR = 1;
     public static final int DEFAULT_DURABILITY = 5;
