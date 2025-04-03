@@ -1,6 +1,5 @@
 package dungeonmania.entities.collectables;
 
-import dungeonmania.battles.BattleStatistics;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.Player;
 import dungeonmania.entities.inventory.PassiveItem;
