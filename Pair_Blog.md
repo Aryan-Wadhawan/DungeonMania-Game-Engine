@@ -67,7 +67,7 @@ This principle states that a class should only have one reason to change. In the
 > ii. Refactor the inheritance structure of the code, and in the process remove the design principle violation you identified.
 
 [Briefly explain what you did]
-We refactored the collectable class hierarchy to separate battle-relevant and passive items:
+I refactored the collectable class hierarchy to separate battle-relevant and passive items:
 
 - Introduced a new abstract class `PassiveItem`, which extends `InventoryItem`. It implements default behavior for `applyBuff()` (no buff) and `getDurability()` (infinite durability).
 - Moved all non-battle collectables (`Wood`, `Treasure`, `Key`, `Arrow`, `Bomb`) to extend `PassiveItem` instead of `InventoryItem`.
