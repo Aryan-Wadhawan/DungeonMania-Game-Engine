@@ -84,9 +84,15 @@ This restructure adheres to SRP, improves code clarity, and paves the way for ea
 
 [Answer]
 
+The code snippet in `Switch.java` violates the **Feature Envy** design principle.  
+The method `activateBombs()` is overly interested in the internal details of the `Bomb` class such as accessing its position and radius directly and using that information to compute blast coordinates. This breaks encapsulation and places the responsibility of bomb specific behavior inside the `Switch` class, even though `Bomb` should own its own detonation logic.
+
 > ii. Refactor the code to resolve the smell and underlying problem causing it.
 
 [Briefly explain what you did]
+To resolve the code smell, I moved the responsibility for blast logic from `Switch` into the `Bomb` class itself. I added a new method `detonate(GameMap map)` in `Bomb.java`, which handles destroying entities in its blast radius. I then updated `Switch.activateBombs()` to simply call this method on each bomb.
+
+This change improves encapsulation and keeps the behavior of each object inside the class that owns it, following the principles of object oriented design.
 
 ### e) Open-Closed Goals
 

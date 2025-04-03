@@ -62,4 +62,16 @@ public class Bomb extends PassiveItem {
     public State getState() {
         return state;
     }
+
+    public void detonate(GameMap map) {
+        int x = getPosition().getX();
+        int y = getPosition().getY();
+
+        for (int i = x - radius; i <= x + radius; i++) {
+            for (int j = y - radius; j <= y + radius; j++) {
+                map.destroyEntitiesOnPosition(i, j);
+            }
+        }
+    }
+
 }
