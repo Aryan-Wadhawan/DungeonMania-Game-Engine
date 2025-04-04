@@ -46,7 +46,7 @@
 
 > i. Identify one place where the State Pattern is present in the codebase. Do you think this is an appropriate use of the State Pattern?
 
-[Answer]
+This implementation is an appropriate use of the State pattern as it encapsulates the player's state-specific behaviors into separate state classes (BaseState, InvincibleState, InvisibleState), allowing the player to transition between different states with distinct behavior. Each state class manages its own transition logic, ensuring that the Player class is only responsible for managing the current state and delegating actions to it. This design adheres to the key characteristics of the State pattern, such as state-specific behavior encapsulation, clean state transitions, and decoupling of state logic from the main class, making the system modular, maintainable, and easily extensible.
 
 > ii. (Option 1) If you answered that it was an appropriate use of the State Pattern, explain why. In your answer, explain how the implementation relates to the purpose and the key characteristics of the State Pattern. Include relevant snippets of code to support your answer.
 
