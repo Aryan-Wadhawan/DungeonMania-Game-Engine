@@ -77,7 +77,7 @@ public class Player extends Entity implements Battleable {
     public void onOverlap(GameMap map, Entity entity) {
         if (entity instanceof Enemy enemy) {
             if (enemy instanceof Mercenary mercenary && mercenary.isAllied())
-                    return;
+                return;
             map.getGame().battle(this, enemy);
         }
     }
@@ -165,12 +165,7 @@ public class Player extends Entity implements Battleable {
     }
 
     public BattleStatistics applyBuff(BattleStatistics origin) {
-        if (state.isInvincible()) {
-            return BattleStatistics.applyBuff(origin, new BattleStatistics(0, 0, 0, 1, 1, true, true));
-        } else if (state.isInvisible()) {
-            return BattleStatistics.applyBuff(origin, new BattleStatistics(0, 0, 0, 1, 1, false, false));
-        }
-        return origin;
+        return state.applyBuff(origin);
     }
 
     @Override

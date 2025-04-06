@@ -42,17 +42,17 @@
 
 ### b) Pattern Analysis
 
-[Links to your merge requests](/put/links/here)
+[Links to your merge requests](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T1/groups/M15B_SHIBA/assignment-ii/-/merge_requests/7)
 
 > i. Identify one place where the State Pattern is present in the codebase. Do you think this is an appropriate use of the State Pattern?
 
-[Answer]
+The State pattern is valid in this implementation but has not been used effectively, resulting in a suboptimal design. While the state-specific behaviors are encapsulated into separate state classes, the design could be improved by better utilizing the pattern's principles.
 
 > ii. (Option 1) If you answered that it was an appropriate use of the State Pattern, explain why. In your answer, explain how the implementation relates to the purpose and the key characteristics of the State Pattern. Include relevant snippets of code to support your answer.
 
 > (Option 2) If you answered that it was not an appropriate use of the State Pattern, refactor the code to improve the implementation. You may choose to improve the usage of the pattern, switch to a different design pattern, or remove the pattern entirely.
 
-[Answer or brief explanation of your code]
+To address this, the PlayerState was modified to use a String to represent the current state instead of a boolean. Additionally, an abstract applyBuff method was introduced, allowing each potion state to define its own implementation. This change eliminates the need for conditional statements in the Player class, as it can now simply call the applyBuff method for state transitions.
 
 ### c) Inheritance Design
 
