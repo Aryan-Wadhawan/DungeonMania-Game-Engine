@@ -297,4 +297,19 @@ public class GameMap {
     public void setGame(Game game) {
         this.game = game;
     }
+
+    public void removePlayerPotionListener(Enemy enemy) {
+        if (enemy instanceof PotionListener potionListener)
+            player.removePotionListener(potionListener);
+    }
+
+    public void battlePlayer(Entity entity, Enemy enemy) {
+        if (entity instanceof Player player) {
+            game.battle(player, enemy);
+        }
+    }
+
+    public Position getPlayerPosition() {
+        return player.getPosition();
+    }
 }

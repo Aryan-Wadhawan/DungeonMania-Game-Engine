@@ -12,10 +12,12 @@ import dungeonmania.entities.Player;
 import dungeonmania.entities.collectables.Bomb;
 import dungeonmania.entities.collectables.potions.Potion;
 import dungeonmania.entities.enemies.Enemy;
+import dungeonmania.entities.inventory.InventoryItem;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.goals.Goal;
 import dungeonmania.map.GameMap;
 import dungeonmania.util.Direction;
+import dungeonmania.util.Position;
 
 public class Game {
     private String id;
@@ -77,10 +79,10 @@ public class Game {
 
     public void battle(Player player, Enemy enemy) {
         battleFacade.battle(this, player, enemy);
-        if (player.getBattleStatistics().getHealth() <= 0) {
+        if (player.getHealth() <= 0) {
             map.destroyEntity(player);
         }
-        if (enemy.getBattleStatistics().getHealth() <= 0) {
+        if (enemy.getHealth() <= 0) {
             map.destroyEntity(enemy);
         }
     }
@@ -205,5 +207,21 @@ public class Game {
 
     public BattleFacade getBattleFacade() {
         return battleFacade;
+    }
+
+    public void removeItemFromPlayer(InventoryItem item) {
+        player.remove(item);
+    }
+
+    public List<Entity> getEntitiesForMap(Position nextPos) {
+        return map.getEntities(nextPos);
+    }
+
+    public void entitiyMoveTo(Entity entity, Position nextPos) {
+        map.moveTo(entity, nextPos);
+    }
+
+    public void destroyEntityFromMap(Entity entity) {
+        map.destroyEntity(entity);
     }
 }

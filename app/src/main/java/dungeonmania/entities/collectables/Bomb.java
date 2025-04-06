@@ -74,4 +74,12 @@ public class Bomb extends InventoryItem {
     public int getDurability() {
         return Integer.MAX_VALUE;
     }
+
+    public int getXPosition() {
+        return getPosition().getX();
+    }
+
+    public int getYPosition() {
+        return getPosition().getY();
+    }
 }

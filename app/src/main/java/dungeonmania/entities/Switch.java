@@ -45,8 +45,8 @@ public class Switch extends Entity {
 
     public void activateBombs(GameMap map) {
         for (Bomb b : bombs) {
-            int x = b.getPosition().getX();
-            int y = b.getPosition().getY();
+            int x = b.getXPosition();
+            int y = b.getYPosition();
             for (int i = x - b.getRadius(); i <= x + b.getRadius(); i++) {
                 for (int j = y - b.getRadius(); j <= y + b.getRadius(); j++) {
                     map.destroyEntitiesOnPosition(i, j);
