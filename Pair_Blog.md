@@ -92,7 +92,7 @@
 
 ### f) Open Refactoring
 
-[Merge Request 1](/put/links/here)
+[Merge Request 1](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T1/groups/M15B_SHIBA/assignment-ii/-/merge_requests/5)
 
 I fixed the violations of the Law of Demeter to ensure the code has low coupling and high cohesion.
 
