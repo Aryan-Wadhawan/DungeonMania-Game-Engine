@@ -35,7 +35,7 @@ public class EntityFactory {
         if (rate == 0 || (tick + 1) % rate != 0)
             return;
         int radius = 20;
-        Position player = map.getPlayer().getPosition();
+        Position player = map.getPlayerPosition();
 
         Spider dummySpider = buildSpider(new Position(0, 0)); // for checking possible positions
 

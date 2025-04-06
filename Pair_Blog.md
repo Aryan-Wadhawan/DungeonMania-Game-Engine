@@ -112,15 +112,21 @@ I refactored the goal system using the **Composite design pattern**. I created a
 
 ### f) Open Refactoring
 
-[Merge Request 1](/put/links/here)
+[Merge Request 1](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T1/groups/M15B_SHIBA/assignment-ii/-/merge_requests/5)
 
-[Briefly explain what you did]
+I fixed the violations of the Law of Demeter to ensure the code has low coupling and high cohesion.
 
 [Merge Request 2](/put/links/here)
 
 [Briefly explain what you did]
 
-Add all other changes you made in the same format here:
+[Merge Request 3](/put/links/here)
+
+[Briefly explain what you did]
+
+[Merge Request 4](/put/links/here)
+
+[Briefly explain what you did]
 
 ## Task 2) Evolution of Requirements 👽
 

@@ -5,7 +5,6 @@ import dungeonmania.battles.BattleStatistics;
 import dungeonmania.battles.Battleable;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.Player;
-import dungeonmania.entities.PotionListener;
 import dungeonmania.map.GameMap;
 import dungeonmania.util.Position;
 
@@ -30,17 +29,14 @@ public abstract class Enemy extends Entity implements Battleable {
 
     @Override
     public void onOverlap(GameMap map, Entity entity) {
-        if (entity instanceof Player player) {
-            map.getGame().battle(player, this);
-        }
+        map.battlePlayer(entity, this);
     }
 
     @Override
     public void onDestroy(GameMap map) {
         Game g = map.getGame();
         g.unsubscribe(getId());
-        if (this instanceof PotionListener potionListener)
-            map.getPlayer().removePotionListener(potionListener);
+        map.removePlayerPotionListener(this);
     }
 
     @Override
@@ -49,4 +45,12 @@ public abstract class Enemy extends Entity implements Battleable {
     }
 
     public abstract void move(Game game);
+
+    public double getHealth() {
+        return battleStatistics.getHealth();
+    }
+
+    public void updateHealth(double health) {
+        battleStatistics.setHealth(health);
+    }
 }

@@ -42,7 +42,7 @@ public class Sword extends BattleItem implements Useable {
     public void use(Game game) {
         durability--;
         if (durability <= 0) {
-            game.getPlayer().remove(this);
+            game.removeItemFromPlayer(this);
         }
     }
 

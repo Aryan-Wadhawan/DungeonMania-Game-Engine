@@ -4,11 +4,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.HashSet;
 
+import dungeonmania.Game;
 import dungeonmania.battles.BattleStatistics;
 import dungeonmania.battles.Battleable;
+import dungeonmania.entities.buildables.Bow;
+import dungeonmania.entities.buildables.Shield;
 import dungeonmania.entities.collectables.Bomb;
+import dungeonmania.entities.collectables.Sword;
 import dungeonmania.entities.collectables.Treasure;
 import dungeonmania.entities.collectables.Useable;
 import dungeonmania.entities.collectables.potions.InvincibilityPotion;
@@ -187,5 +192,23 @@ public class Player extends Entity implements Battleable {
 
     public void removePotionListener(PotionListener e) {
         potionListeners.remove(e);
+    }
+
+    public double getHealth() {
+        return battleStatistics.getHealth();
+    }
+
+    public void updateHealth(double health) {
+        battleStatistics.setHealth(health);
+    }
+
+    public List<InventoryItem> getUsableItems() {
+        return inventory.getEntities(InventoryItem.class).stream()
+                .filter(item -> item instanceof Bow || item instanceof Shield || item instanceof Sword)
+                .collect(Collectors.toList());
+    }
+
+    public void useWeaponFromInventory(Game game) {
+        inventory.useWeapon(game);
     }
 }
