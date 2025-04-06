@@ -4,15 +4,13 @@ import dungeonmania.util.Position;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import dungeonmania.battles.BattleStatistics;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.Player;
 import dungeonmania.entities.Switch;
-import dungeonmania.entities.inventory.InventoryItem;
+import dungeonmania.entities.inventory.PassiveItem;
 import dungeonmania.map.GameMap;
 
-public class Bomb extends InventoryItem {
+public class Bomb extends PassiveItem {
     public enum State {
         SPAWNED, PLACED
     }
@@ -65,21 +63,15 @@ public class Bomb extends InventoryItem {
         return state;
     }
 
-    @Override
-    public BattleStatistics applyBuff(BattleStatistics origin) {
-        return BattleStatistics.applyBuff(origin, new BattleStatistics(0, 0, 0, 1, 1, false, false));
+    public void detonate(GameMap map) {
+        int x = getPosition().getX();
+        int y = getPosition().getY();
+
+        for (int i = x - radius; i <= x + radius; i++) {
+            for (int j = y - radius; j <= y + radius; j++) {
+                map.destroyEntitiesOnPosition(i, j);
+            }
+        }
     }
 
-    @Override
-    public int getDurability() {
-        return Integer.MAX_VALUE;
-    }
-
-    public int getXPosition() {
-        return getPosition().getX();
-    }
-
-    public int getYPosition() {
-        return getPosition().getY();
-    }
 }
