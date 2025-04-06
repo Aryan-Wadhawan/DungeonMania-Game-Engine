@@ -1,8 +1,5 @@
 package dungeonmania.entities.enemies;
 
-import java.util.List;
-import java.util.Random;
-
 import dungeonmania.Game;
 import dungeonmania.battles.BattleStatistics;
 import dungeonmania.entities.Entity;
@@ -19,7 +16,6 @@ import dungeonmania.entities.enemies.strategies.InvincibleStrategy;
 import dungeonmania.entities.enemies.strategies.InvisibleStrategy;
 import dungeonmania.entities.enemies.strategies.Strategy;
 import dungeonmania.map.GameMap;
-import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 public class Mercenary extends Enemy implements Interactable, PotionListener {
