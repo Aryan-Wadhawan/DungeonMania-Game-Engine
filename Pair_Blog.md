@@ -6,11 +6,11 @@
 
 [Answer]
 
-> In the game, player and enemy actions to be performed later are stored as "comparable callbacks". Callbacks are pieces of code that can be run at a later time. However, for what purpose are these callbacks made *comparable*? (1 mark)
+> In the game, player and enemy actions to be performed later are stored as "comparable callbacks". Callbacks are pieces of code that can be run at a later time. However, for what purpose are these callbacks made _comparable_? (1 mark)
 
 [Answer]
 
-> Why is it so important that the dungeon files used for testing follow the technical specification? (4.1.1 in the MVP spec) (1 mark) 
+> Why is it so important that the dungeon files used for testing follow the technical specification? (4.1.1 in the MVP spec) (1 mark)
 
 [Answer]
 
@@ -61,10 +61,20 @@
 > i. List one design principle that is violated by collectable objects based on the description above. Briefly justify your answer.
 
 [Answer]
+The code violates the **Single Responsibility Principle (SRP)**.
+This principle states that a class should only have one reason to change. In the current codebase, passive collectables like Treasure, Wood, Key, Arrow, and Bomb are forced to implement methods like applyBuff() and getDurability() which are related to battle logic — something they do not participate in. This results in these classes taking on responsibilities they shouldn’t have, leading to bloated and misleading code.
 
 > ii. Refactor the inheritance structure of the code, and in the process remove the design principle violation you identified.
 
 [Briefly explain what you did]
+I refactored the collectable class hierarchy to separate battle-relevant and passive items:
+
+- Introduced a new abstract class `PassiveItem`, which extends `InventoryItem`. It implements default behavior for `applyBuff()` (no buff) and `getDurability()` (infinite durability).
+- Moved all non-battle collectables (`Wood`, `Treasure`, `Key`, `Arrow`, `Bomb`) to extend `PassiveItem` instead of `InventoryItem`.
+- Introduced another abstract class `BattleItem`, which requires implementing custom battle logic. This was used for `Sword`, which now extends `BattleItem`.
+- Removed the unnecessary battle logic from passive item classes.
+
+This restructure adheres to SRP, improves code clarity, and paves the way for easier extension in the future.
 
 ### d) More Code Smells
 
@@ -74,9 +84,15 @@
 
 [Answer]
 
+The code snippet in `Switch.java` violates the **Feature Envy** design principle.  
+The method `activateBombs()` is overly interested in the internal details of the `Bomb` class such as accessing its position and radius directly and using that information to compute blast coordinates. This breaks encapsulation and places the responsibility of bomb specific behavior inside the `Switch` class, even though `Bomb` should own its own detonation logic.
+
 > ii. Refactor the code to resolve the smell and underlying problem causing it.
 
 [Briefly explain what you did]
+To resolve the code smell, I moved the responsibility for blast logic from `Switch` into the `Bomb` class itself. I added a new method `detonate(GameMap map)` in `Bomb.java`, which handles destroying entities in its blast radius. I then updated `Switch.activateBombs()` to simply call this method on each bomb.
+
+This change improves encapsulation and keeps the behavior of each object inside the class that owns it, following the principles of object oriented design.
 
 ### e) Open-Closed Goals
 
