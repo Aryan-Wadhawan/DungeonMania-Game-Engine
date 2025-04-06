@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityFactory;
 import dungeonmania.entities.Player;
-import dungeonmania.goals.Goal;
+import dungeonmania.goals.GoalComponent;
 import dungeonmania.goals.GoalFactory;
 import dungeonmania.map.GameMap;
 import dungeonmania.map.GraphNode;
@@ -92,7 +92,7 @@ public class GameBuilder {
 
     public void buildGoals(Game game) {
         if (!dungeon.isNull("goal-condition")) {
-            Goal goal = GoalFactory.createGoal(dungeon.getJSONObject("goal-condition"), config);
+            GoalComponent goal = GoalFactory.createGoal(dungeon.getJSONObject("goal-condition"), config);
             game.setGoals(goal);
         }
     }
