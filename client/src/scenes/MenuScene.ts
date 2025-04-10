@@ -175,9 +175,7 @@ class MenuScene extends Scene {
               list="dungeons"
               required=""
               >
-              <datalist id="dungeons">
               ${dungeons.map((x) => `<option>${x}</option>`).join("\n")}
-              </datalist>
           </select>
           <label for="config" class="f6 b db mb2 mt3"
               >Configuration<span class="normal black-60"></span></label
@@ -188,9 +186,7 @@ class MenuScene extends Scene {
               list="configs"
               required=""
               >
-              <datalist id="configs">
               ${configs.map((x) => `<option>${x}</option>`).join("\n")}
-              </datalist>
           </select>
           `,
           focusConfirm: false,
