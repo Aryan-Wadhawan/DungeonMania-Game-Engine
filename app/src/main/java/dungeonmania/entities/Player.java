@@ -39,6 +39,7 @@ public class Player extends Entity implements Battleable {
     private Set<PotionListener> potionListeners = new HashSet<>();
 
     private int collectedTreasureCount = 0;
+    private int defeatedEnemy = 0;
 
     private PlayerState state;
 
@@ -210,5 +211,13 @@ public class Player extends Entity implements Battleable {
 
     public void useWeaponFromInventory(Game game) {
         inventory.useWeapon(game);
+    }
+
+    public void defeatEnemy() {
+        defeatedEnemy++;
+    }
+
+    public int getDefeatedEnemy() {
+        return defeatedEnemy;
     }
 }

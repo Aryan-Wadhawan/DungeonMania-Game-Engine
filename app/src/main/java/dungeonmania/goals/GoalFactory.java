@@ -24,6 +24,10 @@ public class GoalFactory {
             int target = config.optInt("treasure_goal", 1);
             yield new TreasureGoal(target);
         }
+        case "enemies" -> {
+            int target = config.optInt("enemy_goal", 1);
+            yield new EnemyGoal(target);
+        }
         default -> throw new IllegalArgumentException("Unknown goal type: " + goalType);
         };
     }
