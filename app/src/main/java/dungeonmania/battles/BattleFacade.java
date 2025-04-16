@@ -61,6 +61,10 @@ public class BattleFacade {
         player.updateHealth(playerBattleStatistics.getHealth());
         enemy.updateHealth(enemyBattleStatistics.getHealth());
 
+        if (enemy.getHealth() <= 0) {
+            player.defeatEnemy();
+        }
+
         // 4. Log the battle - solidate it to be a battle response
         battleResponses.add(new BattleResponse(enemyString,
                 rounds.stream().map(ResponseBuilder::getRoundResponse).collect(Collectors.toList()),

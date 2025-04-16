@@ -12,6 +12,7 @@ import dungeonmania.entities.Player;
 import dungeonmania.entities.collectables.Bomb;
 import dungeonmania.entities.collectables.potions.Potion;
 import dungeonmania.entities.enemies.Enemy;
+import dungeonmania.entities.enemies.ZombieToastSpawner;
 import dungeonmania.entities.inventory.InventoryItem;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.goals.GoalComponent;
@@ -223,5 +224,20 @@ public class Game {
 
     public void destroyEntityFromMap(Entity entity) {
         map.destroyEntity(entity);
+    }
+
+    public int countDefeatedEnemy() {
+        return player.getDefeatedEnemy();
+    }
+
+    public int countSpawner() {
+        int count = 0;
+        List<Entity> entities = map.getEntities();
+        for (Entity ent : entities) {
+            if (ent instanceof ZombieToastSpawner) {
+                count++;
+            }
+        }
+        return count;
     }
 }

@@ -132,7 +132,7 @@ I fixed the violations of the Law of Demeter to ensure the code has low coupling
 
 ### a) Microevolution - Enemy Goal
 
-[Links to your merge requests](/put/links/here)
+[Links to your merge requests](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T1/groups/M15B_SHIBA/assignment-ii/-/merge_requests/9)
 
 **Assumptions**
 
@@ -140,7 +140,7 @@ I fixed the violations of the Law of Demeter to ensure the code has low coupling
 
 **Design**
 
-[Design]
+New EnemyGoal class was added, extending the GoalComponent. The achieved() method checks whether the player has defeated at least the configured number of enemies and whether all zombie spawners have been destroyed. To support this, a kill counter and the getter were implemented in the Player class. The ZombieToastSpawner class was updated to include an interact method, allowing the player to destroy it. The Game class now has kill count and remaining spawners for goal checking. The EnemyGoal class functions similarly to other goal types.
 
 **Changes after review**
 
@@ -148,7 +148,12 @@ I fixed the violations of the Law of Demeter to ensure the code has low coupling
 
 **Test list**
 
-[Test List]
+EnemyGoalTest.java
+    zombieToastDefeatGoalSuccess
+    zombieToastDefeatGoalFail
+    twoEnemiesSuccess
+    destroySpawnerSuccess
+    destroySpawnerFail
 
 **Other notes**
 
