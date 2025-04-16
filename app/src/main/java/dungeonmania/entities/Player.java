@@ -67,10 +67,8 @@ public class Player extends Entity implements Battleable {
     }
 
     public boolean build(String entity, EntityFactory factory) {
-        InventoryItem item = inventory.checkBuildCriteria(this, true, entity.equals("shield"), factory);
-        if (item == null)
-            return false;
-        return inventory.add(item);
+        InventoryItem item = inventory.build(entity, factory);
+        return item != null && inventory.add(item);
     }
 
     public void move(GameMap map, Direction direction) {
