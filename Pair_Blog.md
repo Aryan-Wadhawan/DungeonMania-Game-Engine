@@ -116,9 +116,9 @@ I refactored the goal system using the **Composite design pattern**. I created a
 
 I fixed the violations of the Law of Demeter to ensure the code has low coupling and high cohesion.
 
-[Merge Request 2](/put/links/here)
+[Merge Request 2](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T1/groups/M15B_SHIBA/assignment-ii/-/merge_requests/10)
 
-[Briefly explain what you did]
+The buildable creation logic was moved from the Inventory into buildables. This was done using a BuildableBlueprint interface, which allows each buildable to have its own requirements and construction steps.
 
 [Merge Request 3](/put/links/here)
 
