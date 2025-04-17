@@ -3,18 +3,13 @@ package dungeonmania.entities.inventory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import dungeonmania.Game;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityFactory;
-import dungeonmania.entities.Player;
 import dungeonmania.entities.buildables.Bow;
-import dungeonmania.entities.collectables.Arrow;
-import dungeonmania.entities.collectables.Key;
+import dungeonmania.entities.buildables.BuildableRegister;
 import dungeonmania.entities.collectables.Sword;
-import dungeonmania.entities.collectables.Treasure;
 import dungeonmania.entities.collectables.Useable;
-import dungeonmania.entities.collectables.Wood;
 
 public class Inventory {
     private List<InventoryItem> items = new ArrayList<>();
@@ -30,53 +25,13 @@ public class Inventory {
 
     // Get the list of possible buildables
     public List<String> getBuildables() {
-
-        int wood = count(Wood.class);
-        int arrows = count(Arrow.class);
-        int treasure = count(Treasure.class);
-        int keys = count(Key.class);
-        List<String> result = new ArrayList<>();
-
-        if (wood >= 1 && arrows >= 3) {
-            result.add("bow");
-        }
-        if (wood >= 2 && (treasure >= 1 || keys >= 1)) {
-            result.add("shield");
-        }
-        return result;
+        return BuildableRegister.getAvailableBuildables(this);
     }
 
     // Check whether a player has the supplies to build a particular buildable. If so, build the item.
     // Currently since there are only two buildables we have a boolean to keep track of which buildable it is.
-    public InventoryItem checkBuildCriteria(Player p, boolean remove, boolean forceShield, EntityFactory factory) {
-
-        List<Wood> wood = getEntities(Wood.class);
-        List<Arrow> arrows = getEntities(Arrow.class);
-        List<Treasure> treasure = getEntities(Treasure.class);
-        List<Key> keys = getEntities(Key.class);
-
-        if (wood.size() >= 1 && arrows.size() >= 3 && !forceShield) {
-            if (remove) {
-                items.remove(wood.get(0));
-                items.remove(arrows.get(0));
-                items.remove(arrows.get(1));
-                items.remove(arrows.get(2));
-            }
-            return factory.buildBow();
-
-        } else if (wood.size() >= 2 && (treasure.size() >= 1 || keys.size() >= 1)) {
-            if (remove) {
-                items.remove(wood.get(0));
-                items.remove(wood.get(1));
-                if (treasure.size() >= 1) {
-                    items.remove(treasure.get(0));
-                } else {
-                    items.remove(keys.get(0));
-                }
-            }
-            return factory.buildShield();
-        }
-        return null;
+    public InventoryItem build(String name, EntityFactory factory) {
+        return BuildableRegister.build(name, this, factory);
     }
 
     public <T extends InventoryItem> T getFirst(Class<T> itemType) {
@@ -122,5 +77,23 @@ public class Inventory {
 
     public void useWeapon(Game game) {
         getWeapon().use(game);
+    }
+
+    public <T extends InventoryItem> void removeFirst(Class<T> type) {
+        T item = getFirst(type);
+        if (item != null) {
+            remove(item);
+        }
+    }
+
+    public <T extends InventoryItem> void removeFirst(Class<T> type, int count) {
+        int removed = 0;
+        while (removed < count) {
+            T item = getFirst(type);
+            if (item == null)
+                break;
+            remove(item);
+            removed++;
+        }
     }
 }
