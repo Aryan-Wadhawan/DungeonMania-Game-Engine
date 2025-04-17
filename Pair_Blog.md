@@ -56,7 +56,7 @@ To address this, the PlayerState was modified to use a String to represent the c
 
 ### c) Inheritance Design
 
-[Links to your merge requests](/put/links/here)
+[Links to your merge requests](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T1/groups/M15B_SHIBA/assignment-ii/-/merge_requests/3)
 
 > i. List one design principle that is violated by collectable objects based on the description above. Briefly justify your answer.
 
@@ -78,7 +78,7 @@ This restructure adheres to SRP, improves code clarity, and paves the way for ea
 
 ### d) More Code Smells
 
-[Links to your merge requests](/put/links/here)
+[Links to your merge requests](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T1/groups/M15B_SHIBA/assignment-ii/-/merge_requests/3)
 
 > i. What code smell is present in the above snippet?
 
@@ -96,7 +96,7 @@ This change improves encapsulation and keeps the behavior of each object inside 
 
 ### e) Open-Closed Goals
 
-[Links to your merge requests](/put/links/here)
+[Links to your merge requests](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T1/groups/M15B_SHIBA/assignment-ii/-/merge_requests/4)
 
 > i. Do you think the design is of good quality here? Do you think it complies with the open-closed principle? Do you think the design should be changed?
 
@@ -181,6 +181,30 @@ I fixed the violations of the Law of Demeter to ensure the code has low coupling
 ### Choice 2 (Insert choice)
 
 [Links to your merge requests](/put/links/here)
+
+**Assumptions**
+
+[Any assumptions made]
+
+**Design**
+
+[Design]
+
+**Changes after review**
+
+[Design review/Changes made]
+
+**Test list**
+
+[Test List]
+
+**Other notes**
+
+[Any other notes]
+
+### Choice 3 (Logic Switches)
+
+[Links to your merge requests](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T1/groups/M15B_SHIBA/assignment-ii/-/merge_requests/11)
 
 **Assumptions**
 
