@@ -1,6 +1,7 @@
 package dungeonmania.map;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,10 +11,13 @@ import java.util.stream.Collectors;
 
 import dungeonmania.Game;
 import dungeonmania.entities.Entity;
+import dungeonmania.entities.LightBulb;
 import dungeonmania.entities.Player;
 import dungeonmania.entities.Portal;
 import dungeonmania.entities.PotionListener;
 import dungeonmania.entities.Switch;
+import dungeonmania.entities.SwitchDoor;
+import dungeonmania.entities.Wire;
 import dungeonmania.entities.collectables.Bomb;
 import dungeonmania.entities.enemies.Enemy;
 import dungeonmania.entities.enemies.ZombieToastSpawner;
@@ -311,5 +315,23 @@ public class GameMap {
 
     public Position getPlayerPosition() {
         return player.getPosition();
+    }
+
+    public void updateWires() {
+        // Deactivate all wires.
+        getEntities(Wire.class).forEach(Wire::deactivate);
+
+        // Get all activated switches, sort them by activation tick (descending), and activate their wires.
+        getEntities(Switch.class).stream().filter(Switch::isActivated)
+                .sorted(Comparator.comparingInt(Switch::getActivatedTick).reversed())
+                .forEach(switchObj -> switchObj.activateWires(this));
+    }
+
+    public void updateLogicStuff() {
+        // Update all switch doors.
+        getEntities(SwitchDoor.class).forEach(switchDoor -> switchDoor.updateActivation(this));
+
+        // Update all light bulbs.
+        getEntities(LightBulb.class).forEach(lightBulb -> lightBulb.updateLightState(this));
     }
 }

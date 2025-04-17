@@ -150,6 +150,8 @@ public class Game {
         while (!tickActions.isEmpty()) {
             currentAction = tickActions.poll();
             currentAction.run();
+            map.updateWires();
+            map.updateLogicStuff();
             if (currentAction.isValid()) {
                 futureTickActions.add(currentAction);
             }
