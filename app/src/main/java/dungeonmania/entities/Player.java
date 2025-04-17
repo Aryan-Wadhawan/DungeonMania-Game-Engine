@@ -13,6 +13,7 @@ import dungeonmania.battles.Battleable;
 import dungeonmania.entities.buildables.Bow;
 import dungeonmania.entities.buildables.Shield;
 import dungeonmania.entities.collectables.Bomb;
+import dungeonmania.entities.collectables.Key;
 import dungeonmania.entities.collectables.Sword;
 import dungeonmania.entities.collectables.Treasure;
 import dungeonmania.entities.collectables.Useable;
@@ -97,8 +98,18 @@ public class Player extends Entity implements Battleable {
     }
 
     public boolean pickUp(Entity item) {
-        if (item instanceof Treasure)
+        // Handle treasure count
+        if (item instanceof Treasure) {
             collectedTreasureCount++;
+        }
+
+        // Prevent multiple keys
+        if (item instanceof Key) {
+            boolean hasKey = inventory.getEntities().stream().anyMatch(i -> i instanceof Key);
+            if (hasKey)
+                return false;
+        }
+
         return inventory.add((InventoryItem) item);
     }
 
