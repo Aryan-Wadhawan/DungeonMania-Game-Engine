@@ -314,7 +314,7 @@ KEY logic seems wrong, player can pickup multiple keys at once, this I will fix 
 
 ## 1 Multiple Keys pickup bug + test bug
 
-### [Merge Request 1](/put/links/here)
+### [Merge Request 1](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T1/groups/M15B_SHIBA/assignment-ii/-/merge_requests/12)
 
 **Fix: Prevent player from picking up multiple keys**
 
@@ -326,13 +326,13 @@ However, the original implementation allowed the player to pick up multiple keys
 
 To fix this:
 
-- We updated the `pickUp()` method in the `Player` class to check whether a key already exists in the inventory.
+- I updated the `pickUp()` method in the `Player` class to check whether a key already exists in the inventory.
 
 - If the player is already holding a key, they are prevented from picking up another.
 
 This change ensures that the inventory reflects the correct key behavior outlined in the spec.
 
-We also added the following test to confirm the fix:
+I also added the following test to confirm the fix:
 
 ```java
 @Test
@@ -346,7 +346,7 @@ public void cannotPickupTwoKeys() {
 
 ## 2 Fix Zombie Toast Teleportation
 
-### [Merge Request: Fix Zombie Toast Teleportation](/put/merge/request/link/here)
+### [Merge Request: Fix Zombie Toast Teleportation](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T1/groups/M15B_SHIBA/assignment-ii/-/merge_requests/12)
 
 **What I Did**  
 Reviewed the `Portal` entity implementation and compared it against the MVP specification. Found that `ZombieToast` was incorrectly allowed to teleport through portals, which contradicts:
