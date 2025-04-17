@@ -56,7 +56,7 @@ To address this, the PlayerState was modified to use a String to represent the c
 
 ### c) Inheritance Design
 
-[Links to your merge requests](/put/links/here)
+[Links to your merge requests](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T1/groups/M15B_SHIBA/assignment-ii/-/merge_requests/3)
 
 > i. List one design principle that is violated by collectable objects based on the description above. Briefly justify your answer.
 
@@ -78,7 +78,7 @@ This restructure adheres to SRP, improves code clarity, and paves the way for ea
 
 ### d) More Code Smells
 
-[Links to your merge requests](/put/links/here)
+[Links to your merge requests](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T1/groups/M15B_SHIBA/assignment-ii/-/merge_requests/3)
 
 > i. What code smell is present in the above snippet?
 
@@ -96,7 +96,7 @@ This change improves encapsulation and keeps the behavior of each object inside 
 
 ### e) Open-Closed Goals
 
-[Links to your merge requests](/put/links/here)
+[Links to your merge requests](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T1/groups/M15B_SHIBA/assignment-ii/-/merge_requests/4)
 
 > i. Do you think the design is of good quality here? Do you think it complies with the open-closed principle? Do you think the design should be changed?
 
@@ -206,6 +206,90 @@ EnemyGoalTest.java
 **Other notes**
 
 [Any other notes]
+
+### Choice 3 (Logic Switches)
+
+[Links to your merge requests](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T1/groups/M15B_SHIBA/assignment-ii/-/merge_requests/11)
+
+**Assumptions**
+
+[Any assumptions made]
+
+- **Initial state**: all logical entities (`light_bulb_off`, `switch_door`) start deactivated.
+- **Conductors**: only `Switch` and `Wire` propagate current; adjacency is strictly cardinal.
+- **Activation ticks**: `Switch` records the tick when first activated by a boulder; `Wire` inherits that tick.
+
+**Design**
+
+[Design]
+
+1. **`LogicalRuleStrategy`**
+   - Static helpers:
+     - `isActivated(Entity)` -> checks `Wire` or `Switch`.
+     - `isTickActivated(Entity)` -> returns activation tick or –1.
+   - Core: `isActiveLogically(GameMap, Position)`.
+2. **Concrete strategies**
+   - **OR**: any adjacent conductor active.
+   - **XOR**: exactly one active.
+   - **AND**: all adjacent conductors active and ≥2.
+   - **CO_AND**: ≥2 share the **maximum** activation tick.
+3. **Entities**
+   - `Switch` records activation tick on boulder overlap, calls `activateWires()`.
+   - `Wire` recurses `activateWiresNearby(...)`, skips already activated this tick.
+   - `LightBulb` & `SwitchDoor` hold a strategy, run `updateActivation()` each tick.
+4. **Tick ordering**
+   - **Phase 1**: `updateWires()`deactivate all wires, then propagate from active switches.
+   - **Phase 2**: `updateLogicals()`evaluate each logical entity’s strategy.
+
+**Changes after review**
+
+[Design review/Changes made]
+
+- Added functionality for LightBulb to infer its on/off state each tick in side NameConverter class
+- Enhanced Switch class with methods to activate connected wires.
+- Extended GameMap to run `updateWires()` and `updateLogicals()` on every tick in Game class
+
+**Test list**
+
+[Test List]
+
+1. **switchDoorLogicTest**  
+   _“Test that XOR and OR switch doors open and AND switch door remains closed.”_
+
+2. **testCoAndLightBulbToggling**  
+   _“CoAnd logic toggles light bulbs correctly with a switch–wire network.”_
+
+3. **verifyCompositeLogicBulbs**  
+   _“Validate composite logic sequences (OR, XOR, AND, CO_AND) for multiple light bulbs.”_
+
+4. **verifyOrDoorBlocksWhenInactive**  
+   _“OR switch door blocks movement when not energized.”_
+
+5. **testOrDoorActivationWalkThrough**  
+   _“OR switch door opens once activated and toggles its linked light bulb.”_
+
+6. **testAndDoorLogic**  
+   _“AND switch door opens only when both input switches are active.”_
+
+7. **testAndLightBulbActivation**  
+   _“AND light bulb activates only when its two input conductors are both active.”_
+
+8. **lightBulbRequiresThreeInputs**  
+   _“3‑input AND light bulb powers on only when all three adjacent inputs are active.”_
+
+9. **xorLightBulbBehavior**  
+   _“XOR light bulb toggles on/off based on exactly one active input.”_
+
+10. **testCoAndPersistence**  
+    _“CO_AND light bulb stays on when extra activations occur from other switches.”_
+
+11. **logicMixed**  
+    _“Full‐map mixed‐logic test covering OR, XOR, AND and CO_AND gates together.”_
+
+**Other notes**
+
+[Any other notes]
+KEY logic seems wrong, player can pickup multiple keys at once, this I will fix in next MR
 
 ### Choice 3 (Insert choice) (If you have a 3rd member)
 

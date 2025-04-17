@@ -9,6 +9,7 @@ import dungeonmania.util.Position;
 
 public class Switch extends Entity {
     private boolean activated;
+    private int activatedTick;
     private List<Bomb> bombs = new ArrayList<>();
 
     public Switch(Position position) {
@@ -38,6 +39,7 @@ public class Switch extends Entity {
     @Override
     public void onOverlap(GameMap map, Entity entity) {
         if (entity instanceof Boulder) {
+            activatedTick = map.getGame().getTick();
             activated = true;
             activateBombs(map);
         }
@@ -49,11 +51,28 @@ public class Switch extends Entity {
         }
     }
 
+    public void activateWires(GameMap gameMap) {
+        List<Position> adjacentPositions = getPosition().getCardinallyAdjacentPositions();
+
+        for (Position position : adjacentPositions) {
+            List<Entity> entities = gameMap.getEntities(position);
+            for (Entity entity : entities) {
+                if (entity instanceof Wire) {
+                    ((Wire) entity).activateWiresNearby(gameMap, activatedTick);
+                }
+            }
+        }
+    }
+
     @Override
     public void onMovedAway(GameMap map, Entity entity) {
         if (entity instanceof Boulder) {
             activated = false;
         }
+    }
+
+    public int getActivatedTick() {
+        return activatedTick;
     }
 
     public boolean isActivated() {

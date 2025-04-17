@@ -6,6 +6,8 @@ import java.util.Iterator;
 import dungeonmania.entities.Door;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.Portal;
+import dungeonmania.entities.LightBulb;
+import dungeonmania.entities.SwitchDoor;
 
 /*
  * Converts the name of a class to snake case. This snake case string is the
@@ -18,6 +20,11 @@ import dungeonmania.entities.Portal;
 public class NameConverter {
     public static String toSnakeCase(Entity entity) {
         String nameBasic = toSnakeCase(entity.getClass().getSimpleName());
+        if (entity instanceof SwitchDoor) {
+            String open = ((SwitchDoor) entity).isActivated() ? "_open" : "";
+            return nameBasic + open;
+        }
+
         if (entity instanceof Portal portal) {
             String color = "_" + portal.getColor().toLowerCase();
             return nameBasic + color;
@@ -26,6 +33,11 @@ public class NameConverter {
             String open = door.isOpen() ? "_open" : "";
             return nameBasic + open;
         }
+        if (entity instanceof LightBulb) {
+            String open = ((LightBulb) entity).isActivated() ? "_on" : "_off";
+            return nameBasic + open;
+        }
+
         return nameBasic;
     }
 

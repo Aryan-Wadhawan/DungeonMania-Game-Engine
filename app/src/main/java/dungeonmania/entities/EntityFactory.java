@@ -5,6 +5,11 @@ import dungeonmania.entities.buildables.Bow;
 import dungeonmania.entities.buildables.Shield;
 import dungeonmania.entities.collectables.*;
 import dungeonmania.entities.enemies.*;
+import dungeonmania.entities.logics.AndLogicStrategy;
+import dungeonmania.entities.logics.CoAndLogicStrategy;
+import dungeonmania.entities.logics.LogicalRuleStrategy;
+import dungeonmania.entities.logics.OrLogicStrategy;
+import dungeonmania.entities.logics.XorLogicStrategy;
 import dungeonmania.map.GameMap;
 import dungeonmania.entities.collectables.potions.InvincibilityPotion;
 import dungeonmania.entities.collectables.potions.InvisibilityPotion;
@@ -26,6 +31,25 @@ public class EntityFactory {
 
     public Entity createEntity(JSONObject jsonEntity) {
         return constructEntity(jsonEntity, config);
+    }
+
+    public static LogicalRuleStrategy findLogicRule(String logic) {
+        switch (logic) {
+        case "and":
+            return new AndLogicStrategy();
+
+        case "or":
+            return new OrLogicStrategy();
+
+        case "xor":
+            return new XorLogicStrategy();
+
+        case "co_and":
+            return new CoAndLogicStrategy();
+
+        default:
+            return new AndLogicStrategy();
+        }
     }
 
     public void spawnSpider(Game game) {
@@ -169,6 +193,13 @@ public class EntityFactory {
             return new Door(pos, jsonEntity.getInt("key"));
         case "key":
             return new Key(pos, jsonEntity.getInt("key"));
+        case "light_bulb_off":
+            return new LightBulb(pos, findLogicRule(jsonEntity.optString("logic", "or")));
+
+        case "switch_door":
+            return new SwitchDoor(pos, findLogicRule(jsonEntity.optString("logic", "or")));
+        case "wire":
+            return new Wire(pos);
         default:
             throw new IllegalArgumentException(
                     String.format("Failed to recognise '%s' entity in EntityFactory", jsonEntity.getString("type")));
