@@ -365,3 +365,28 @@ Now, zombies no longer teleport across portals. This matches the intended game b
 
 - Portal binding and adjacent destination validation remain correct.
 - The stream logic for selecting teleportation positions is preserved.
+
+## 3 Mercenary Bribe Radius Bug
+
+### [Merge Request: Fix Mercenary Bribe Radius + Broken Test](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T1/groups/M15B_SHIBA/assignment-ii/-/merge_requests/)
+
+**Issue**  
+While testing mercenary bribes, I found that the original `canBeBribed()` method only checked for treasure count, **not player proximity**. According to the spec:
+
+> "Mercenaries must be within a certain radius of the player in order to be bribed..."
+
+However, the game allowed bribing from any distance. Also, the test `bribeRadius()` incorrectly assumed immediate success after picking up treasure.
+
+**Fix Implemented**
+
+- Added a proper distance check using `Position.getAdjacentPositions()` to enforce radius constraints.
+- Updated the test to move the player adjacent to the merc before calling `interact()`.
+
+**Result**  
+Bribes now only succeed when the player is close enough, matching MVP behavior.
+
+```java
+assertEquals(new Position(4, 1), getPlayerPos(res));
+assertEquals(new Position(5, 1), getMercPos(res));
+assertEquals(0, TestUtils.getInventory(res, "treasure").size());
+```
