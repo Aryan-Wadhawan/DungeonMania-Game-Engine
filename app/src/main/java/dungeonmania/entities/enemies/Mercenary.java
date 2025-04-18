@@ -59,7 +59,9 @@ public class Mercenary extends Enemy implements Interactable, PotionListener {
      * check whether the current merc can be bribed
      */
     private boolean canBeBribed(Player player) {
-        return bribeRadius >= 0 && player.countEntityOfType(Treasure.class) >= bribeAmount;
+        Position playerPos = player.getPosition();
+        return Position.withinRadius(playerPos, getPosition(), bribeRadius)
+                && player.countEntityOfType(Treasure.class) >= bribeAmount;
     }
 
     /**

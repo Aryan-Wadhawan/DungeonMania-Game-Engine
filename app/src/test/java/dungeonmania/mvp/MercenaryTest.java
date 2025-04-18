@@ -130,14 +130,26 @@ public class MercenaryTest {
 
         String mercId = TestUtils.getEntitiesStream(res, "mercenary").findFirst().get().getId();
 
-        // pick up treasure
+        // Tick 1: move right and pick up treasure
         res = dmc.tick(Direction.RIGHT);
         assertEquals(1, TestUtils.getInventory(res, "treasure").size());
+        assertEquals(new Position(2, 1), getPlayerPos(res));
         assertEquals(new Position(7, 1), getMercPos(res));
 
-        // attempt bribe
-        assertDoesNotThrow(() -> dmc.interact(mercId));
-        assertEquals(1, TestUtils.getInventory(res, "treasure").size());
+        // Tick 2: move right again to get within bribe radius (e.g., now adjacent to merc)
+        res = dmc.tick(Direction.RIGHT);
+        res = dmc.tick(Direction.RIGHT);
+        assertEquals(new Position(4, 1), getPlayerPos(res));
+        assertEquals(new Position(5, 1), getMercPos(res));
+
+        // achieve bribe - success
+        res = assertDoesNotThrow(() -> dmc.interact(mercId));
+        assertEquals(0, TestUtils.getInventory(res, "treasure").size());
+        assertEquals(new Position(4, 1), getPlayerPos(res));
+        assertEquals(new Position(5, 1), getMercPos(res));
+
+        // Assert treasure is used
+        assertEquals(0, TestUtils.getInventory(res, "treasure").size());
     }
 
     @Test

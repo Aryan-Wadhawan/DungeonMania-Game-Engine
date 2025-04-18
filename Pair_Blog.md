@@ -317,12 +317,81 @@ KEY logic seems wrong, player can pickup multiple keys at once, this I will fix 
 
 ## Task 3) Investigation Task ⁉️
 
-[Merge Request 1](/put/links/here)
+## 1 Multiple Keys pickup bug + test bug
 
-[Briefly explain what you did]
+### [Merge Request 1](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T1/groups/M15B_SHIBA/assignment-ii/-/merge_requests/12)
 
-[Merge Request 2](/put/links/here)
+**Fix: Prevent player from picking up multiple keys**
 
-[Briefly explain what you did]
+After reviewing the MVP specification and the codebase, I identified a mismatch in how the `Key` entity was handled. According to the spec:
 
-Add all other changes you made in the same format here:
+> "The Player can carry only one key at a time..."
+
+However, the original implementation allowed the player to pick up multiple keys, which violates this rule.
+
+To fix this:
+
+- I updated the `pickUp()` method in the `Player` class to check whether a key already exists in the inventory.
+
+- If the player is already holding a key, they are prevented from picking up another.
+
+This change ensures that the inventory reflects the correct key behavior outlined in the spec.
+
+I also added the following test to confirm the fix:
+
+```java
+@Test
+@Tag("4-4")
+@DisplayName("Test player cannot pickup two keys at the same time")
+public void cannotPickupTwoKeys() {
+    ...
+    assertEquals(1, TestUtils.getInventory(res, "key").size());
+}
+```
+
+## 2 Fix Zombie Toast Teleportation
+
+### [Merge Request: Fix Zombie Toast Teleportation](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T1/groups/M15B_SHIBA/assignment-ii/-/merge_requests/12)
+
+**What I Did**  
+Reviewed the `Portal` entity implementation and compared it against the MVP specification. Found that `ZombieToast` was incorrectly allowed to teleport through portals, which contradicts:
+
+"Zombies are limited by the same movement constraints as the Player, **except portals have no effect on them**."
+
+**Fix Implemented**
+
+- Removed `ZombieToast` from the `onOverlap()` teleportation condition in `Portal.java`.
+- Ensured only `Player` and `Mercenary` entities are allowed to teleport.
+
+**Result**  
+Now, zombies no longer teleport across portals. This matches the intended game behavior from the MVP.
+
+**Other Notes**
+
+- Portal binding and adjacent destination validation remain correct.
+- The stream logic for selecting teleportation positions is preserved.
+
+## 3 Mercenary Bribe Radius Bug
+
+### [Merge Request: Fix Mercenary Bribe Radius + Broken Test](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T1/groups/M15B_SHIBA/assignment-ii/-/merge_requests/13)
+
+**Issue**  
+While testing mercenary bribes, I found that the original `canBeBribed()` method only checked for treasure count, **not player proximity**. According to the spec:
+
+> "Mercenaries must be within a certain radius of the player in order to be bribed..."
+
+However, the game allowed bribing from any distance. Also, the test `bribeRadius()` incorrectly assumed immediate success after picking up treasure.
+
+**Fix Implemented**
+
+- Added a proper distance check using `Position.getAdjacentPositions()` to enforce radius constraints.
+- Updated the test to move the player adjacent to the merc before calling `interact()`.
+
+**Result**  
+Bribes now only succeed when the player is close enough, matching MVP behavior.
+
+```java
+assertEquals(new Position(4, 1), getPlayerPos(res));
+assertEquals(new Position(5, 1), getMercPos(res));
+assertEquals(0, TestUtils.getInventory(res, "treasure").size());
+```

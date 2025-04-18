@@ -133,4 +133,22 @@ public final class Position {
         adjacentPositions.add(new Position(x - 1, y));
         return adjacentPositions;
     }
+
+    /**
+    * Checks whether two positions are within a specified square-shaped radius of each other.
+    * <p>
+    * This method considers both cardinal and diagonal directions. It returns true if the
+    * horizontal and vertical distances between position {@code a} and position {@code b}
+    * are each less than or equal to the specified {@code radius}.
+    * </p>
+    *
+    * @param a The first position.
+    * @param b The second position.
+    * @param radius The maximum allowed distance in both x and y directions.
+    * @return {@code true} if {@code a} and {@code b} are within the radius, {@code false} otherwise.
+    */
+    public static boolean withinRadius(Position a, Position b, int radius) {
+        return Math.abs(a.getX() - b.getX()) <= radius && Math.abs(a.getY() - b.getY()) <= radius;
+    }
+
 }

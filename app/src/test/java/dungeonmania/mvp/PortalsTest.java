@@ -88,17 +88,21 @@ public class PortalsTest {
         DungeonManiaController controller = new DungeonManiaController();
         DungeonResponse res = controller.newGame("d_PortalsTest_testNoEffectOnZombie",
                 "c_PortalsTest_testNoEffectOnZombie");
-        Position zombiePosition = TestUtils.getEntities(res, "zombie_toast").get(0).getPosition();
-        Position portalPosition = new Position(3, 1);
 
-        // Try at most 100 random movements
-        // Early exit if the zombie moves to the portal position
-        for (int i = 0; (i < 100 && !zombiePosition.equals(portalPosition)); ++i) {
+        Position linkedPortal = new Position(8, 1); // location of the linked one
+
+        for (int i = 0; i < 100; ++i) {
             res = controller.tick(Direction.DOWN);
-            zombiePosition = TestUtils.getEntities(res, "zombie_toast").get(0).getPosition();
-            assertTrue(TestUtils.getManhattanDistance(zombiePosition, portalPosition) > 0);
+            res = controller.tick(Direction.RIGHT);
+            res = controller.tick(Direction.LEFT);
+            res = controller.tick(Direction.UP);
+            Position currentZombiePos = TestUtils.getEntities(res, "zombie_toast").get(0).getPosition();
+
+            // Assert zombie never teleported to the linked portal's surrounding tiles
+            for (Position p : linkedPortal.getCardinallyAdjacentPositions()) {
+                assertNotEquals(currentZombiePos, p, "Zombie should not be teleported by portal.");
+            }
         }
-        assertTrue(TestUtils.getManhattanDistance(zombiePosition, portalPosition) > 0);
     }
 
     @Test
