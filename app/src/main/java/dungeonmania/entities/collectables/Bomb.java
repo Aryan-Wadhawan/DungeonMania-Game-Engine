@@ -48,7 +48,9 @@ public class Bomb extends PassiveItem {
     }
 
     public void onPutDown(GameMap map, Position p) {
-        translate(Position.calculatePositionBetween(getPosition(), p));
+        // Replace deprecated translate(...) with setPosition(...) + Position.translateBy(...)
+        setPosition(Position.translateBy(getPosition(), Position.calculatePositionBetween(getPosition(), p)));
+
         map.addEntity(this);
         this.state = State.PLACED;
         List<Position> adjPosList = getPosition().getCardinallyAdjacentPositions();

@@ -368,7 +368,7 @@ Now, zombies no longer teleport across portals. This matches the intended game b
 
 ## 3 Mercenary Bribe Radius Bug
 
-### [Merge Request: Fix Mercenary Bribe Radius + Broken Test](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T1/groups/M15B_SHIBA/assignment-ii/-/merge_requests/)
+### [Merge Request: Fix Mercenary Bribe Radius + Broken Test](https://nw-syd-gitlab.cseunsw.tech/COMP2511/25T1/groups/M15B_SHIBA/assignment-ii/-/merge_requests/13)
 
 **Issue**  
 While testing mercenary bribes, I found that the original `canBeBribed()` method only checked for treasure count, **not player proximity**. According to the spec:

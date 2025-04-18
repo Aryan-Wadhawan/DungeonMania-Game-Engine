@@ -138,7 +138,7 @@ public final class Position {
     * Checks whether two positions are within a specified square-shaped radius of each other.
     * <p>
     * This method considers both cardinal and diagonal directions. It returns true if the
-    * horizontal and vertical distances between position {@code a} and position {@code b} 
+    * horizontal and vertical distances between position {@code a} and position {@code b}
     * are each less than or equal to the specified {@code radius}.
     * </p>
     *
